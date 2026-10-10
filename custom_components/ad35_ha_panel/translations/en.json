@@ -1,0 +1,438 @@
+{
+  "title": "AD35 HA Panel",
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "Add an AD35 screen",
+        "description": "Automatically add a new screen, recover a previous save, or use a temporary code, pairing file or manual details.",
+        "menu_options": {
+          "pin_start": "Use an 8-digit temporary code",
+          "pairing_file": "Import pairing file",
+          "manual": "Enter manually",
+          "auto": "Add automatically (recommended)",
+          "recover": "Recover a saved setup"
+        }
+      },
+      "confirm": {
+        "title": "Add {name}",
+        "description": "Confirm that this screen may connect to {origin}. Next, authorize in HA, choose screen items or weather, and explicitly save your selection. No screen interaction is needed.",
+        "data": {}
+      },
+      "select": {
+        "title": "Choose screen entities",
+        "description": "Search and select up to 64 screen items and one optional weather entity, or leave both empty. An empty screen remains bound to HA and items can be added later. Panels using automatic HTTPS onboarding require firmware 2.7.2 or later to save an empty selection. Firmware 2.6.0 adds sensors, binary sensors, locks, cameras and vacuums. Only this screen’s authorized catalog is selectable. Sensors display state only; cameras show still images with manual refresh.\n\nHome layout: choose positions 1–6 only from the screen items selected above. Automatic keeps the saved order and appends newly selected items. All remaining items are retained, with weather separate. Names follow HA entity names. Review the items and home order, confirm and submit once to save.",
+        "data": {
+          "entity_ids": "Screen items (multiple selection)",
+          "weather_id": "Weather",
+          "home_slot_1": "Home layout · Position 1",
+          "home_slot_2": "Home layout · Position 2",
+          "home_slot_3": "Home layout · Position 3",
+          "home_slot_4": "Home layout · Position 4",
+          "home_slot_5": "Home layout · Position 5",
+          "home_slot_6": "Home layout · Position 6",
+          "confirm_selection": "Confirm saving these screen items and home order"
+        }
+      },
+      "reconfigure": {
+        "title": "Choose entities again for {name}",
+        "description": "This screen is already bound. Confirm reauthorization and a new entity selection for the same HA origin, {origin}. If the original HA entry is missing, a successful save restores it. The existing binding is kept until the new selection is saved. No screen interaction is needed.",
+        "data": {}
+      },
+      "credentials": {
+        "title": "Connect to the AD35 screen",
+        "description": "Screen MAC: {mac}. Enter its individual connection key and the origin of this HA instance reachable by both the screen and your browser. Discovery details are verified over the encrypted connection. Keys are never shown again; you can retry an incorrect key.",
+        "data": {
+          "host": "Screen address",
+          "noise_psk": "Device connection key",
+          "ha_origin": "Home Assistant origin (no path)"
+        }
+      },
+      "manual": {
+        "title": "Enter device details manually",
+        "description": "Enter the screen address, MAC, its individual connection key, and the origin of this HA instance reachable by the screen. Requires stable firmware 2.1.2 or newer. Complete setup entirely in HA.",
+        "data": {
+          "host": "Screen address",
+          "mac": "Screen MAC address",
+          "noise_psk": "Device connection key",
+          "ha_origin": "Home Assistant origin (no path)"
+        }
+      },
+      "pairing_file": {
+        "title": "Import the screen pairing file",
+        "description": "Choose the .ad35 or .json pairing file supplied with your screen and check the HA origin reachable by both the screen and your browser. Submitting connects this screen and starts HA authorization; you then choose entities and explicitly save. An already-bound screen first asks you to confirm reconfiguration with the same HA. No screen interaction is needed.",
+        "data": {
+          "pairing_file": "Device pairing file",
+          "ha_origin": "Home Assistant origin (no path)"
+        }
+      },
+      "connection": {
+        "title": "Retry the screen connection",
+        "description": "Pairing details are retained temporarily, so there is no need to upload again. Check the screen address and this HA origin, then retry, or select “Choose another pairing file” to replace it.",
+        "data": {
+          "host": "Screen address",
+          "ha_origin": "Home Assistant origin (no path)",
+          "replace_pairing_file": "Choose another pairing file"
+        }
+      },
+      "pin_start": {
+        "title": "Start temporary-code pairing",
+        "description": "Check the HA origin and submit. The screen will show an 8-digit temporary code; no screen touch is needed. Requires firmware 2.2.0 or newer. Already-bound screens normally keep this feature closed; use Reconfigure on the existing entry.",
+        "data": {
+          "host": "Screen address",
+          "mac": "Screen MAC address",
+          "ha_origin": "Home Assistant origin (no path)"
+        }
+      },
+      "pin": {
+        "title": "Enter the temporary screen code",
+        "description": "Enter all 8 digits shown on the screen, including any leading zeros. The temporary code lasts up to 120 seconds and establishes this secure connection. Next, authorize in HA and choose the entities to display.",
+        "data": {
+          "pin": "8-digit temporary code"
+        }
+      },
+      "auto": {
+        "title": "Add the screen automatically",
+        "description": "With firmware 2.3.1 or later, an unbound screen stays available for setup while connected to Wi-Fi, including after a restart. Check this HA origin, confirm and continue to HA authorization, entity selection and saving. No code, file or screen confirmation is needed. Firmware 2.3.0 still requires setup within five minutes of saving Wi-Fi on the screen. A trusted device certificate is required. From firmware 2.4.0, this HA can also check and manually install firmware from the device’s fixed release source; installation is never automatic. From firmware 2.5.0, you may also upload a device-specific local firmware file in HA and explicitly confirm installation after review.",
+        "data": {
+          "host": "Screen address",
+          "mac": "Screen MAC address",
+          "ha_origin": "Home Assistant origin (no path)",
+          "confirm": "Allow this screen to connect and let this HA manage displayed entities and vendor firmware updates"
+        }
+      },
+      "recover": {
+        "title": "Recover a saved screen setup",
+        "description": "Verify the screen using recovery credentials already stored on this HA. This reads the saved binding and does not repeat a save. Enter the current screen address. If an interrupted attempt never saved and the screen remains unbound, you can explicitly start authorization again; this never clears an existing binding. If reconnection of an existing entry was interrupted, verified recovery updates that same entry and preserves its history without repeating the save.",
+        "data": {
+          "host": "Screen address",
+          "mac": "Screen MAC address",
+          "confirm": "Verify and recover this screen entry",
+          "restart_uncommitted": "Start authorization again only if the screen has not saved a binding"
+        }
+      },
+      "reconnect": {
+        "title": "Reconnect {name}",
+        "description": "The screen was unbound locally. Keep this HA entry and its history. Check the address and confirm, then authorize the same HA origin ({origin}), choose screen items or weather and explicitly save. The entry credentials change only after a verified save. An existing screen binding is never replaced anonymously.",
+        "data": {
+          "host": "Screen address",
+          "confirm_reconnect": "Reconnect this screen and keep its existing HA entry"
+        }
+      }
+    },
+    "progress": {
+      "wait_screen": "Preparing authorization over the encrypted connection. No screen interaction is needed.",
+      "load_catalog": "Authorizing the screen and loading your available entities.",
+      "save": "Saving on the screen. Wait for confirmation; cancellation cannot undo a save."
+    },
+    "error": {
+      "not_allowlisted": "The legacy key file does not contain this screen. Enter its individual connection key to continue.",
+      "unsafe_allowlist": "The legacy key file is invalid. Use a regular file owned by the HA user with permission 0600, or enter the device key again.",
+      "invalid_origin": "Enter an HA origin without a path. HTTP requires a private IPv4 address; HTTPS requires a trusted certificate.",
+      "invalid_host": "Enter the screen IPv4 address or hostname, without a URL scheme or port.",
+      "identity_mismatch": "The device identity does not match the supplied MAC or supported AD35 model. Check the connection card and address.",
+      "unsupported_firmware": "Screen firmware 2.1.2 or a newer stable version is required for setup or reconfiguration within HA.",
+      "already_bound": "This screen is already bound. Reconfigure with the same HA origin to choose entities or restore a missing entry.",
+      "busy": "The screen is busy with another configuration or update. Try again when it is idle.",
+      "cannot_connect": "Unable to establish the encrypted connection. Check the screen address, network and its individual connection key, then retry.",
+      "invalid_response": "The screen returned an incompatible response.",
+      "invalid_request": "The pairing request is invalid or exceeds its size limit.",
+      "invalid_phase": "This setup session is no longer in the expected stage. Start a new setup.",
+      "device_rejected": "The screen rejected the pairing operation.",
+      "native_api_failed": "The encrypted Native API action failed.",
+      "expired": "The authorization or setup session expired. Start again in HA.",
+      "rejected": "Pairing was rejected on the screen.",
+      "cancelled": "Pairing was cancelled.",
+      "authorization_denied": "Home Assistant authorization was declined.",
+      "invalid_authorization": "The authorization response is invalid. Start setup again.",
+      "invalid_selection": "Select up to 64 screen items and one optional weather entity from this authorized catalog; duplicates are not allowed.",
+      "save_uncertain": "The screen may have saved, but HA did not confirm the result. For automatic setup, choose “Recover a saved setup” or reopen its discovery card; HA retained the recovery credential and will not repeat the save. Older connection methods can use the original pairing file. Do not clear the binding.",
+      "commit_in_progress": "The screen is saving. Cancellation cannot undo this operation.",
+      "already_authorized": "This authorization code has already been submitted. Start a fresh setup if needed.",
+      "already_configured": "This screen is already added.",
+      "already_in_progress": "Setup is already in progress for this screen.",
+      "not_bound": "The screen is no longer bound, so this entry cannot be reconfigured. Check the device and existing entry.",
+      "origin_mismatch": "Reconfiguration requires the same HA origin as the existing binding. Use the original origin; the existing binding has not changed.",
+      "binding_changed": "The screen binding changed during setup. These changes were not saved; start again.",
+      "selection_confirmation_required": "Review the chosen entities, check the confirmation box and submit to save.",
+      "reconfigure_successful": "The new entity selection was saved on the screen and the original HA entry was updated.",
+      "invalid_noise_psk": "Enter this device’s connection key: the complete 44-character Base64 encoding of a 32-byte key.",
+      "invalid_port": "The AD35 encrypted connection port must be 6053.",
+      "invalid_pairing_file": "The pairing file format is incorrect or this upload has expired. Select the original .ad35 or .json file supplied with your screen again.",
+      "invalid_pin": "Enter exactly 8 digits from the screen, including any leading zeros.",
+      "bootstrap_invalid_response": "The device returned an incompatible pairing response. Check the device and firmware.",
+      "bootstrap_unsupported_firmware": "Temporary codes require stable firmware 2.2.0 or newer. Older firmware can use a pairing file or manual entry.",
+      "bootstrap_unavailable": "Unable to reach the temporary-code service. Check the screen address, network and firmware 2.2.0 or newer, then retry.",
+      "bootstrap_busy": "The screen is busy with another operation. Start again when it is idle.",
+      "bootstrap_already_bound": "Temporary-code access is currently closed. Use Reconfigure on the existing entry, or import the pairing file to restore a missing entry.",
+      "bootstrap_locked": "The attempt limit was reached. Wait until the screen allows pairing again, then restart.",
+      "bootstrap_expired": "This temporary-code window expired. Start again and use the newly displayed code.",
+      "bootstrap_connection_lost": "The pairing connection was lost. Start again; the old code cannot resume this connection.",
+      "bootstrap_auth_failed": "The temporary code could not be verified. Start again and check the newly displayed 8-digit code.",
+      "bootstrap_failed": "Temporary-code pairing did not complete. Check the screen and start again.",
+      "bootstrap_verified": "Pairing-code verification succeeded. This device is already added. Use Reconfigure on its existing entry to change displayed entities.",
+      "commissioning_confirmation_required": "Review this screen and confirm before continuing.",
+      "commissioning_unsupported_firmware": "Automatic setup requires stable firmware 2.3.0 or newer. Use a temporary code, pairing file or manual entry for older firmware.",
+      "commissioning_unavailable": "Unable to reach the screen over HTTPS. Check its address, network and port 8443, then retry.",
+      "commissioning_certificate_error": "The screen certificate is not trusted or does not match this MAC. Use the matching device firmware and integration; do not disable certificate verification.",
+      "commissioning_closed": "Automatic setup is not available right now. With firmware 2.3.1 or later, check that the unbound screen is connected to Wi-Fi and has no other setup or maintenance in progress, then retry. Firmware 2.3.0 requires setup within five minutes of saving Wi-Fi on the screen. Use Reconfigure for an existing bound device, or use an alternate setup method.",
+      "commissioning_already_bound": "This screen is already bound and anonymous automatic setup is closed. Use its existing entry, recover this HA’s saved setup, or use the original pairing file.",
+      "invalid_credential": "The saved configuration credential was rejected. The device binding was not changed. Check the original HA entry and recovery record.",
+      "transport_mismatch": "This transaction belongs to another connection method. Cancel and start the appropriate setup flow.",
+      "not_ready": "The screen is not ready for setup. Wait for its network or current operation to finish.",
+      "recovery_storage_error": "Unable to safely read or persist the private recovery record. Check HA storage permissions and free space. No new device save was started before a durable record existed.",
+      "recovery_not_found": "This HA has no automatic-setup recovery record for that MAC. Use the existing entry, or the original pairing file for an older binding.",
+      "recovery_mismatch": "The saved screen binding does not match this recovery record. No configuration was changed; check the original HA entry.",
+      "home_order_not_selected": "Home positions must use screen items selected above. Choose Automatic to keep the current order.",
+      "home_order_duplicate": "Each entity can occupy only one home position.",
+      "home_order_position_unavailable": "A home position cannot exceed the number of selected screen items. Leave later positions on Automatic.",
+      "reconnect_confirmation_required": "Confirm reconnection, then complete authorization and screen item selection.",
+      "reconnect_required": "The screen was unbound. Reconnect from the existing AD35 entry’s reauthentication prompt or Reconfigure. Do not delete the device.",
+      "reconnect_successful": "Reconnected; the existing HA entry and history were retained.",
+      "empty_selection_requires_firmware": "Clearing all screen items and weather requires panel firmware 2.7.2 or later. Upgrade the panel first; the saved selection remains unchanged."
+    },
+    "abort": {
+      "not_allowlisted": "The legacy key file does not contain this screen. Enter its individual connection key to continue.",
+      "unsafe_allowlist": "The legacy key file is invalid. Use a regular file owned by the HA user with permission 0600, or enter the device key again.",
+      "invalid_origin": "Enter an HA origin without a path. HTTP requires a private IPv4 address; HTTPS requires a trusted certificate.",
+      "invalid_host": "Enter the screen IPv4 address or hostname, without a URL scheme or port.",
+      "identity_mismatch": "The device identity does not match the supplied MAC or supported AD35 model. Check the connection card and address.",
+      "unsupported_firmware": "Screen firmware 2.1.2 or a newer stable version is required for setup or reconfiguration within HA.",
+      "already_bound": "This screen is already bound. Reconfigure with the same HA origin to choose entities or restore a missing entry.",
+      "busy": "The screen is busy with another configuration or update. Try again when it is idle.",
+      "cannot_connect": "Unable to establish the encrypted connection. Check the screen address, network and its individual connection key, then retry.",
+      "invalid_response": "The screen returned an incompatible response.",
+      "invalid_request": "The pairing request is invalid or exceeds its size limit.",
+      "invalid_phase": "This setup session is no longer in the expected stage. Start a new setup.",
+      "device_rejected": "The screen rejected the pairing operation.",
+      "native_api_failed": "The encrypted Native API action failed.",
+      "expired": "The authorization or setup session expired. Start again in HA.",
+      "rejected": "Pairing was rejected on the screen.",
+      "cancelled": "Pairing was cancelled.",
+      "authorization_denied": "Home Assistant authorization was declined.",
+      "invalid_authorization": "The authorization response is invalid. Start setup again.",
+      "invalid_selection": "Select up to 64 screen items and one optional weather entity from this authorized catalog; duplicates are not allowed.",
+      "save_uncertain": "The screen may have saved, but HA did not confirm the result. For automatic setup, choose “Recover a saved setup” or reopen its discovery card; HA retained the recovery credential and will not repeat the save. Older connection methods can use the original pairing file. Do not clear the binding.",
+      "commit_in_progress": "The screen is saving. Cancellation cannot undo this operation.",
+      "already_authorized": "This authorization code has already been submitted. Start a fresh setup if needed.",
+      "already_configured": "This screen is already added.",
+      "already_in_progress": "Setup is already in progress for this screen.",
+      "not_bound": "The screen is no longer bound, so this entry cannot be reconfigured. Check the device and existing entry.",
+      "origin_mismatch": "Reconfiguration requires the same HA origin as the existing binding. Use the original origin; the existing binding has not changed.",
+      "binding_changed": "The screen binding changed during setup. These changes were not saved; start again.",
+      "selection_confirmation_required": "Review the chosen entities, check the confirmation box and submit to save.",
+      "reconfigure_successful": "The new entity selection was saved on the screen and the original HA entry was updated.",
+      "invalid_noise_psk": "Enter this device’s connection key: the complete 44-character Base64 encoding of a 32-byte key.",
+      "invalid_port": "The AD35 encrypted connection port must be 6053.",
+      "invalid_pairing_file": "The pairing file format is incorrect or this upload has expired. Select the original .ad35 or .json file supplied with your screen again.",
+      "invalid_pin": "Enter exactly 8 digits from the screen, including any leading zeros.",
+      "bootstrap_invalid_response": "The device returned an incompatible pairing response. Check the device and firmware.",
+      "bootstrap_unsupported_firmware": "Temporary codes require stable firmware 2.2.0 or newer. Older firmware can use a pairing file or manual entry.",
+      "bootstrap_unavailable": "Unable to reach the temporary-code service. Check the screen address, network and firmware 2.2.0 or newer, then retry.",
+      "bootstrap_busy": "The screen is busy with another operation. Start again when it is idle.",
+      "bootstrap_already_bound": "Temporary-code access is currently closed. Use Reconfigure on the existing entry, or import the pairing file to restore a missing entry.",
+      "bootstrap_locked": "The attempt limit was reached. Wait until the screen allows pairing again, then restart.",
+      "bootstrap_expired": "This temporary-code window expired. Start again and use the newly displayed code.",
+      "bootstrap_connection_lost": "The pairing connection was lost. Start again; the old code cannot resume this connection.",
+      "bootstrap_auth_failed": "The temporary code could not be verified. Start again and check the newly displayed 8-digit code.",
+      "bootstrap_failed": "Temporary-code pairing did not complete. Check the screen and start again.",
+      "bootstrap_verified": "Pairing-code verification succeeded. This device is already added. Use Reconfigure on its existing entry to change displayed entities.",
+      "commissioning_confirmation_required": "Review this screen and confirm before continuing.",
+      "commissioning_unsupported_firmware": "Automatic setup requires stable firmware 2.3.0 or newer. Use a temporary code, pairing file or manual entry for older firmware.",
+      "commissioning_unavailable": "Unable to reach the screen over HTTPS. Check its address, network and port 8443, then retry.",
+      "commissioning_certificate_error": "The screen certificate is not trusted or does not match this MAC. Use the matching device firmware and integration; do not disable certificate verification.",
+      "commissioning_closed": "Automatic setup is not available right now. With firmware 2.3.1 or later, check that the unbound screen is connected to Wi-Fi and has no other setup or maintenance in progress, then retry. Firmware 2.3.0 requires setup within five minutes of saving Wi-Fi on the screen. Use Reconfigure for an existing bound device, or use an alternate setup method.",
+      "commissioning_already_bound": "This screen is already bound and anonymous automatic setup is closed. Use its existing entry, recover this HA’s saved setup, or use the original pairing file.",
+      "invalid_credential": "The saved configuration credential was rejected. The device binding was not changed. Check the original HA entry and recovery record.",
+      "transport_mismatch": "This transaction belongs to another connection method. Cancel and start the appropriate setup flow.",
+      "not_ready": "The screen is not ready for setup. Wait for its network or current operation to finish.",
+      "recovery_storage_error": "Unable to safely read or persist the private recovery record. Check HA storage permissions and free space. No new device save was started before a durable record existed.",
+      "recovery_not_found": "This HA has no automatic-setup recovery record for that MAC. Use the existing entry, or the original pairing file for an older binding.",
+      "recovery_mismatch": "The saved screen binding does not match this recovery record. No configuration was changed; check the original HA entry.",
+      "reconnect_confirmation_required": "Confirm reconnection, then complete authorization and screen item selection.",
+      "reconnect_required": "The screen was unbound. Reconnect from the existing AD35 entry’s reauthentication prompt or Reconfigure. Do not delete the device.",
+      "reconnect_successful": "Reconnected; the existing HA entry and history were retained.",
+      "reauth_successful": "Reconnected; the existing HA entry and history were retained.",
+      "empty_selection_requires_firmware": "Clearing all screen items and weather requires panel firmware 2.7.2 or later. Upgrade the panel first; the saved selection remains unchanged."
+    }
+  },
+  "entity": {
+    "update": {
+      "firmware": {
+        "name": "Firmware"
+      }
+    },
+    "button": {
+      "check_firmware": {
+        "name": "Check firmware updates"
+      }
+    }
+  },
+  "exceptions": {
+    "update_requires_firmware": {
+      "message": "HA firmware updates require device firmware 2.4.0 or newer. First upgrade through the existing maintenance method."
+    },
+    "update_not_configured": {
+      "message": "This screen has no configured firmware release service. The current version is shown, but updates cannot be checked or installed yet."
+    },
+    "update_not_ready": {
+      "message": "The screen is temporarily busy or offline. Wait for its current operation to finish and try again."
+    },
+    "update_busy": {
+      "message": "A device operation is already in progress. Wait before checking or installing again."
+    },
+    "update_no_candidate": {
+      "message": "No installable update is available. Check for updates first."
+    },
+    "update_candidate_mismatch": {
+      "message": "The checked release changed or expired. Check again and review the offered version before installing."
+    },
+    "update_request_mismatch": {
+      "message": "The device rejected a conflicting update request. No install was retried."
+    },
+    "update_check_failed": {
+      "message": "Unable to check the firmware release service. Try checking again later."
+    },
+    "update_manifest_invalid": {
+      "message": "The release manifest failed validation. No firmware was installed."
+    },
+    "update_download_auth_failed": {
+      "message": "The device could not authenticate with its release service. Contact the device provider."
+    },
+    "update_update_failed": {
+      "message": "The firmware update failed. Check the device status before trying again."
+    },
+    "update_unknown_operation": {
+      "message": "The firmware does not support HA update commands. Upgrade through the existing maintenance method."
+    },
+    "update_invalid_credential": {
+      "message": "The device rejected this HA binding credential. The update was not authorized."
+    },
+    "update_invalid_payload": {
+      "message": "The device rejected the update request format. Update the matching integration and firmware."
+    },
+    "update_check_timeout": {
+      "message": "The check did not finish in time. Its request was not repeated; check the device status before retrying."
+    },
+    "update_result_unknown": {
+      "message": "The update result could not be confirmed within ten minutes. No install was repeated. Wait for the screen to reconnect and verify its current version before trying again."
+    },
+    "update_invalid_options": {
+      "message": "Only the currently offered firmware can be installed. Version selection and firmware backup are not supported."
+    },
+    "update_unavailable": {
+      "message": "The authenticated device connection is unavailable. Check its network and try again."
+    },
+    "identity_mismatch": {
+      "message": "The connected device does not match this HA entry. No update was authorized."
+    },
+    "commissioning_certificate_error": {
+      "message": "The device TLS certificate is not trusted or does not match its MAC. Certificate verification cannot be bypassed."
+    },
+    "invalid_response": {
+      "message": "The device returned an invalid update response. No request was repeated."
+    },
+    "invalid_credential": {
+      "message": "The saved HA binding credential is invalid. Check the existing device binding."
+    },
+    "update_interrupted": {
+      "message": "Another maintenance operation interrupted the firmware operation. Check the device status, then check for updates again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Device options",
+        "menu_options": {
+          "local_upload": "Install a local firmware file"
+        }
+      },
+      "local_upload": {
+        "title": "Local firmware file",
+        "description": "Select the OTA .bin supplied for this screen. The file is validated and shown for review before anything is written. Do not select a factory image. The upload is removed and its in-memory copy is cleared when this flow ends.",
+        "data": {
+          "firmware_file": "OTA firmware file (.bin)"
+        }
+      },
+      "local_confirm": {
+        "title": "Confirm local installation",
+        "description": "Device: {name}\nCurrent version: {current_version}\nTarget version: {target_version}\nSize: {size} bytes\nSHA256: {sha256}\n\nSame-version reinstall is supported; downgrades are not. Keep power and network connected during installation and reboot. Selected HA entities are retained.",
+        "data": {
+          "confirm_install": "I have reviewed this file and confirm installation and reboot"
+        }
+      }
+    },
+    "progress": {
+      "local_install": "Transferring and verifying firmware, then checking the device after reboot. Keep power and network connected."
+    },
+    "error": {
+      "local_requires_firmware": "Local file installation requires device firmware 2.5.0 or later. Upgrade once using the existing cloud or maintenance method; cloud updates remain available.",
+      "local_invalid_image": "Select the original device-specific OTA .bin. Factory images, older images without device metadata, and damaged or oversized files are not accepted.",
+      "local_wrong_device": "This firmware belongs to a different device or model. Select the OTA file supplied for this screen.",
+      "local_downgrade": "Installing an older version is not supported. Choose the current version or a newer version.",
+      "local_busy": "Another update or device operation is in progress. Wait for it to finish before trying again.",
+      "local_confirm_required": "Review the device, version, size and SHA256, then explicitly confirm installation.",
+      "local_expired": "This upload or transfer has expired. Select the original file again.",
+      "local_result_unknown": "The device has not confirmed the new boot. Installation was not sent again. Check the device and its version before starting another installation.",
+      "local_transfer_failed": "The device did not confirm this transfer. No write was automatically repeated. Wait for the incomplete transfer to expire, then try again.",
+      "local_unavailable": "The device could not be reached or this entry is not loaded. Restore the connection and try again.",
+      "identity_mismatch": "The authenticated device does not match this entry. No firmware was installed.",
+      "commissioning_certificate_error": "Device certificate verification failed. Check the device identity and connection.",
+      "invalid_response": "The device returned an invalid response. The transfer was stopped.",
+      "local_interrupted": "The transfer was interrupted. Incomplete transfers expire on the device; verification already in progress is not cancelled.",
+      "local_invalid_payload": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_invalid_credential": "This entry no longer has firmware-update permission. Restore its binding before trying again.",
+      "local_unknown_operation": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_not_ready": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_request_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_invalid_session": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_size_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_offset_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_hash_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_begin_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_write_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_verify_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_boot_failed": "The device restarted, but its target partition, version or image digest did not match. Installation is not confirmed.",
+      "local_incomplete": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_commit_in_progress": "The device is already verifying or switching firmware. Wait for it to restart; do not interrupt power.",
+      "local_aborted": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_network_changed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_binding_changed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated."
+    },
+    "abort": {
+      "local_requires_firmware": "Local file installation requires device firmware 2.5.0 or later. Upgrade once using the existing cloud or maintenance method; cloud updates remain available.",
+      "local_invalid_image": "Select the original device-specific OTA .bin. Factory images, older images without device metadata, and damaged or oversized files are not accepted.",
+      "local_wrong_device": "This firmware belongs to a different device or model. Select the OTA file supplied for this screen.",
+      "local_downgrade": "Installing an older version is not supported. Choose the current version or a newer version.",
+      "local_busy": "Another update or device operation is in progress. Wait for it to finish before trying again.",
+      "local_confirm_required": "Review the device, version, size and SHA256, then explicitly confirm installation.",
+      "local_expired": "This upload or transfer has expired. Select the original file again.",
+      "local_result_unknown": "The device has not confirmed the new boot. Installation was not sent again. Check the device and its version before starting another installation.",
+      "local_transfer_failed": "The device did not confirm this transfer. No write was automatically repeated. Wait for the incomplete transfer to expire, then try again.",
+      "local_unavailable": "The device could not be reached or this entry is not loaded. Restore the connection and try again.",
+      "identity_mismatch": "The authenticated device does not match this entry. No firmware was installed.",
+      "commissioning_certificate_error": "Device certificate verification failed. Check the device identity and connection.",
+      "invalid_response": "The device returned an invalid response. The transfer was stopped.",
+      "local_interrupted": "The transfer was interrupted. Incomplete transfers expire on the device; verification already in progress is not cancelled.",
+      "local_success": "Local firmware installation verified: the device rebooted into the target partition and its version and image digest match the uploaded file.",
+      "local_invalid_payload": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_invalid_credential": "This entry no longer has firmware-update permission. Restore its binding before trying again.",
+      "local_unknown_operation": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_not_ready": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_request_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_invalid_session": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_size_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_offset_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_hash_mismatch": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_begin_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_write_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_verify_failed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_boot_failed": "The device restarted, but its target partition, version or image digest did not match. Installation is not confirmed.",
+      "local_incomplete": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_commit_in_progress": "The device is already verifying or switching firmware. Wait for it to restart; do not interrupt power.",
+      "local_aborted": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_network_changed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated.",
+      "local_binding_changed": "The device rejected or could not complete this local update. Check the device and connection, then select the original firmware again. No write was automatically repeated."
+    }
+  }
+}

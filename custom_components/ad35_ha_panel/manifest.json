@@ -1,0 +1,24 @@
+{
+  "domain": "ad35_ha_panel",
+  "name": "AD35 HA Panel",
+  "codeowners": [
+    "@zemismart-dev"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "http",
+    "zeroconf",
+    "file_upload"
+  ],
+  "documentation": "https://github.com/zemismart-dev/ad35-ha-panel",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "requirements": [
+    "aioesphomeapi==45.6.1"
+  ],
+  "version": "0.9.3",
+  "zeroconf": [
+    "_ad35panel._tcp.local."
+  ],
+  "issue_tracker": "https://github.com/zemismart-dev/ad35-ha-panel/issues"
+}

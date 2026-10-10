@@ -1,0 +1,438 @@
+{
+  "title": "AD35 HA 控制屏",
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "添加 AD35 屏幕",
+        "description": "自动添加新桌宠，也可恢复上次保存，或使用临时码、配对文件及手动输入。",
+        "menu_options": {
+          "pin_start": "使用 8 位临时码",
+          "pairing_file": "导入配对文件",
+          "manual": "手动填写",
+          "auto": "自动添加（推荐）",
+          "recover": "恢复已保存的配置"
+        }
+      },
+      "confirm": {
+        "title": "添加 {name}",
+        "description": "确认允许屏幕连接到 {origin}，然后在 HA 中完成授权、选择显示项目或天气，并明确保存。无需在屏幕上操作。",
+        "data": {}
+      },
+      "select": {
+        "title": "选择屏幕实体",
+        "description": "搜索并选择最多 64 个显示项目及 1 个天气，也可以全部留空；清空后仍保持 HA 绑定，以后可再添加。HTTPS 自动接入的桌宠需要固件 2.7.2 或以上才能全部留空。固件 2.6.0 新增传感器、状态传感器、门锁、摄像头和扫地机器人；只能选择本次授权目录中的实体。传感器只显示状态，摄像头显示可手动刷新的静态画面。\n\n首页布局：位置 1–6 只能选上方已勾选的显示项目；“自动补齐”会保留已保存的顺序，新选项目追加在后面。其余显示项目全部保留，天气独立显示。名称沿用 HA 实体名称。核对显示项目与首页顺序，勾选确认后提交。",
+        "data": {
+          "entity_ids": "显示项目（可多选）",
+          "weather_id": "天气实体",
+          "home_slot_1": "首页布局 · 位置 1",
+          "home_slot_2": "首页布局 · 位置 2",
+          "home_slot_3": "首页布局 · 位置 3",
+          "home_slot_4": "首页布局 · 位置 4",
+          "home_slot_5": "首页布局 · 位置 5",
+          "home_slot_6": "首页布局 · 位置 6",
+          "confirm_selection": "确认将所选显示项目及首页顺序保存到桌宠"
+        }
+      },
+      "reconfigure": {
+        "title": "重新选择 {name} 的内容",
+        "description": "此屏幕已有绑定。确认使用同一个 HA 地址 {origin} 重新授权并选择内容；若原 HA 条目已丢失，保存成功后会恢复条目。新选择保存成功前保留原绑定。无需在屏幕上操作。",
+        "data": {}
+      },
+      "credentials": {
+        "title": "连接 AD35 屏幕",
+        "description": "屏幕 MAC：{mac}。输入该设备独立的 连接密钥，以及屏幕和浏览器都能访问的本 HA 地址。自动发现信息会在加密连接后验证。密钥不会回填显示，输错后可重试。",
+        "data": {
+          "host": "屏幕地址",
+          "noise_psk": "设备连接密钥",
+          "ha_origin": "Home Assistant 地址（不含路径）"
+        }
+      },
+      "manual": {
+        "title": "手动填写设备信息",
+        "description": "输入屏幕的地址、MAC 和该设备独立的 连接密钥，以及屏幕能访问的本 HA 地址。需要 2.1.2 或更新的稳定固件，全部接入操作都在 HA 中完成。",
+        "data": {
+          "host": "屏幕地址",
+          "mac": "屏幕 MAC 地址",
+          "noise_psk": "设备连接密钥",
+          "ha_origin": "Home Assistant 地址（不含路径）"
+        }
+      },
+      "pairing_file": {
+        "title": "导入设备配对文件",
+        "description": "选择随设备提供的 .ad35 或 .json 配对文件，并核对屏幕和浏览器都能访问的 HA 地址。提交后将连接此屏幕并开始 HA 授权，之后由你选择内容并明确保存。若屏幕已有绑定，会先提示同 HA 重新配置。无需在屏幕上操作。",
+        "data": {
+          "pairing_file": "设备配对文件",
+          "ha_origin": "Home Assistant 地址（不含路径）"
+        }
+      },
+      "connection": {
+        "title": "重试连接屏幕",
+        "description": "配对信息已临时保留，无需重复上传。检查屏幕地址及本 HA 地址后重试；也可勾选“重新选择配对文件”来更换文件。",
+        "data": {
+          "host": "屏幕地址",
+          "ha_origin": "Home Assistant 地址（不含路径）",
+          "replace_pairing_file": "重新选择配对文件"
+        }
+      },
+      "pin_start": {
+        "title": "开始临时码配对",
+        "description": "核对 HA 地址后提交，屏幕会自动显示 8 位临时码，无需触碰屏幕。此方式需要 2.2.0 或更新固件；已绑定屏幕默认不开放临时码，可使用现有条目的重新配置。",
+        "data": {
+          "host": "屏幕地址",
+          "mac": "屏幕 MAC 地址",
+          "ha_origin": "Home Assistant 地址（不含路径）"
+        }
+      },
+      "pin": {
+        "title": "输入屏幕上的临时码",
+        "description": "输入屏幕上显示的全部 8 位数字，开头的 0 也要保留。临时码最多 120 秒有效，仅用于建立此次安全连接。之后在 HA 中授权并选择要显示的设备。",
+        "data": {
+          "pin": "8 位临时码"
+        }
+      },
+      "auto": {
+        "title": "自动添加桌宠",
+        "description": "固件 2.3.1 及以上的未绑定桌宠连接 Wi-Fi 后会持续等待添加，重启后也可添加。核对本 HA 地址，确认后完成 HA 授权、设备选择和保存，不需要临时码、配对文件或屏幕确认。旧固件 2.3.0 仍需在屏上保存 Wi-Fi 后五分钟内添加。设备需有受信证书。 固件 2.4.0 起，本 HA 还可检查并由你手动安装设备固定发布源的固件，不会自动安装。 固件 2.5.0 起，也可在本 HA 上传此设备专用的本地固件，核对后明确确认安装。",
+        "data": {
+          "host": "桌宠地址",
+          "mac": "桌宠 MAC 地址",
+          "ha_origin": "Home Assistant 地址（不含路径）",
+          "confirm": "允许桌宠接入本 HA，并由本 HA 管理显示设备和厂商固件升级"
+        }
+      },
+      "recover": {
+        "title": "恢复已保存的桌宠配置",
+        "description": "使用此 HA 已安全保存的恢复凭据核对屏端绑定，不会重复保存。请填写桌宠当前地址。若上次中断发生在保存之前，且桌宠仍未绑定，可勾选重新授权；此操作不会清除已有绑定。 如果中断发生在重新连接已有条目期间，会在验证保存结果后更新同一条目，保留设备及历史，不重复保存。",
+        "data": {
+          "host": "桌宠地址",
+          "mac": "桌宠 MAC 地址",
+          "confirm": "核对并恢复这台桌宠条目",
+          "restart_uncommitted": "仅在桌宠尚未保存绑定时，重新开始授权"
+        }
+      },
+      "reconnect": {
+        "title": "重新连接 {name}",
+        "description": "桌宠已在屏幕上解除绑定。此流程保留 HA 中原设备条目及历史。核对地址并确认后，重新授权当前 HA（{origin}），选择显示项目或天气，再明确保存。保存确认前不会更换原条目的连接凭据。如果桌宠已连接其他 HA，此处不会自动覆盖。",
+        "data": {
+          "host": "桌宠地址",
+          "confirm_reconnect": "确认重新连接此桌宠，并保留原 HA 条目"
+        }
+      }
+    },
+    "progress": {
+      "wait_screen": "正在通过加密连接准备 HA 授权，无需操作屏幕。",
+      "load_catalog": "正在授权屏幕并读取可用实体目录。",
+      "save": "屏幕正在保存，请等待完成；取消不能撤销已经提交的保存。"
+    },
+    "error": {
+      "not_allowlisted": "旧条目引用的设备密钥文件中没有此屏幕。可在此重新输入该设备的独立连接密钥。",
+      "unsafe_allowlist": "旧条目引用的设备密钥文件无效。文件应由 HA 用户所有、权限为 0600；也可重新输入设备密钥。",
+      "invalid_origin": "请输入不带路径的 HA 地址。HTTP 需使用内网 IPv4；HTTPS 需有效可信证书。",
+      "invalid_host": "请输入屏幕 IPv4 地址或主机名，不带协议前缀和端口。",
+      "identity_mismatch": "设备身份与所填 MAC 或支持的 AD35 型号不符。请核对设备连接卡和地址。",
+      "unsupported_firmware": "需要屏幕固件 2.1.2 或更新正式版本，才能在 HA 内添加或重新配置。",
+      "already_bound": "屏幕已有绑定。使用同一个 HA 地址重新配置即可选择内容或恢复缺失的条目。",
+      "busy": "屏幕正在处理其他配置或更新，请空闲后重试。",
+      "cannot_connect": "无法建立设备加密连接。请检查屏幕地址、网络和该设备的独立 连接密钥，然后重试。",
+      "invalid_response": "屏幕返回了不兼容的协议响应。",
+      "invalid_request": "配对请求无效或超过长度限制。",
+      "invalid_phase": "本次配置已不在预期阶段，请重新开始。",
+      "device_rejected": "屏幕拒绝了本次配对操作。",
+      "native_api_failed": "加密 Native API 操作失败。",
+      "expired": "授权或配置会话已过期，请在 HA 中重新开始。",
+      "rejected": "已在屏幕上拒绝配对。",
+      "cancelled": "配对已取消。",
+      "authorization_denied": "已拒绝 Home Assistant 授权。",
+      "invalid_authorization": "授权响应无效，请重新开始。",
+      "invalid_selection": "请从本次授权目录选择至多 64 个显示项目，另可选 1 个天气，不可重复。",
+      "save_uncertain": "桌宠可能已保存，但 HA 未确认结果。自动添加请选“恢复已保存的配置”或重新打开发现卡片；HA 保留了恢复凭据，不会重复保存。旧连接方式可用原配对文件恢复，请勿清空绑定。",
+      "commit_in_progress": "屏幕正在保存，此时取消不能撤销保存。",
+      "already_authorized": "授权码已提交过，请勿重复提交。",
+      "already_configured": "这台屏幕已添加。",
+      "already_in_progress": "这台屏幕已有进行中的添加流程。",
+      "not_bound": "屏幕已不再绑定，无法重新配置此条目。请核对设备和现有条目。",
+      "origin_mismatch": "重新配置只允许原来绑定的同一个 HA 地址。请使用原地址；现有绑定未更改。",
+      "binding_changed": "屏幕绑定已在此次配置期间变化，本次更改未保存，请重新开始。",
+      "selection_confirmation_required": "请先核对所选实体，再勾选“确认将所选实体保存到屏幕”并提交。",
+      "reconfigure_successful": "已在屏幕保存新的实体选择，并更新原 HA 条目。",
+      "invalid_noise_psk": "请输入该设备的 连接密钥：32 字节密钥的完整 Base64 编码（44 个字符）。",
+      "invalid_port": "AD35 加密连接端口必须为 6053。",
+      "invalid_pairing_file": "配对文件格式不正确或本次上传已失效，请重新选择随设备提供的原始 .ad35/.json 文件。",
+      "invalid_pin": "请输入屏幕上显示的完整 8 位数字，保留开头的 0。",
+      "bootstrap_invalid_response": "设备返回了不兼容的配对响应，请检查设备及固件版本。",
+      "bootstrap_unsupported_firmware": "临时码需要 2.2.0 或更新的稳定固件。旧固件可使用配对文件或手动填写。",
+      "bootstrap_unavailable": "无法连接临时码服务。检查屏幕地址、网络及 2.2.0 以上固件后重试。",
+      "bootstrap_busy": "屏幕正在处理其他操作，请稍后重新开始。",
+      "bootstrap_already_bound": "屏幕当前未开放临时码。已有条目请使用重新配置；若条目丢失，可导入配对文件恢复。",
+      "bootstrap_locked": "尝试次数已达上限，请等待屏幕允许重新配对后再开始。",
+      "bootstrap_expired": "本次临时码已过期，请重新开始并使用屏幕新显示的临时码。",
+      "bootstrap_connection_lost": "配对连接已断开，请重新开始；旧临时码不能用于恢复连接。",
+      "bootstrap_auth_failed": "临时码未验证通过，请重新开始并核对屏幕上新显示的 8 位码。",
+      "bootstrap_failed": "临时码配对未完成，请检查屏幕后重新开始。",
+      "bootstrap_verified": "配对码验证成功，设备已添加。修改显示设备请使用现有条目的重新配置。",
+      "commissioning_confirmation_required": "请核对这台桌宠，并勾选确认后继续。",
+      "commissioning_unsupported_firmware": "自动添加需要稳定版固件 2.3.0 或以上。旧固件可使用临时码、配对文件或手动输入。",
+      "commissioning_unavailable": "无法通过 HTTPS 连接桌宠，请检查设备地址、网络及 8443 端口后重试。",
+      "commissioning_certificate_error": "桌宠证书不受信任或与此 MAC 不符。请使用匹配的设备固件和集成，不要关闭证书验证。",
+      "commissioning_closed": "桌宠暂时无法自动添加。固件 2.3.1 及以上请确认桌宠未绑定、已连接 Wi-Fi，且没有其它配置或维护操作，再重试；旧固件 2.3.0 仍需在屏上保存 Wi-Fi 后五分钟内添加。已有绑定请用“重新配置”，也可使用备用配对方式。",
+      "commissioning_already_bound": "桌宠已绑定，匿名自动添加已关闭。请使用已有条目、恢复此 HA 已保存的配置，或使用原配对文件。",
+      "invalid_credential": "保存的配置凭据未获设备认可，屏端绑定未改变。请检查原 HA 条目和恢复记录。",
+      "transport_mismatch": "此事务属于另一种连接方式，请取消后使用对应入口重新开始。",
+      "not_ready": "桌宠暂未准备好，请等待网络连接或当前操作完成。",
+      "recovery_storage_error": "无法安全读取或保存私有恢复记录，请检查 HA 存储权限与可用空间。确认恢复记录落盘前，不会向桌宠发起新的保存。",
+      "recovery_not_found": "此 HA 没有这台 MAC 的自动添加恢复记录。请使用已有条目，旧绑定可使用原配对文件。",
+      "recovery_mismatch": "屏端已保存的绑定与恢复记录不符，本次没有修改配置。请检查原 HA 条目。",
+      "home_order_not_selected": "首页位置只能选择上方已勾选的显示项目；选择“自动补齐”可保留当前顺序。",
+      "home_order_duplicate": "同一实体只能设置一个首页位置。",
+      "home_order_position_unavailable": "首页位置不能超过已选显示项目的数量；其余位置请选择“自动补齐”。",
+      "reconnect_confirmation_required": "请明确确认重新连接，之后仍需授权和选择显示项目。",
+      "reconnect_required": "桌宠已解绑，请在原 AD35 条目的“需要重新认证”提示中重新连接，或使用原条目的“重新配置”。无需删除设备。",
+      "reconnect_successful": "已重新连接，原 HA 设备条目及历史保留。",
+      "empty_selection_requires_firmware": "清空全部显示项目和天气需要桌宠固件 2.7.2 或以上。请先升级固件，当前已保存的选择不会改变。"
+    },
+    "abort": {
+      "not_allowlisted": "旧条目引用的设备密钥文件中没有此屏幕。可在此重新输入该设备的独立连接密钥。",
+      "unsafe_allowlist": "旧条目引用的设备密钥文件无效。文件应由 HA 用户所有、权限为 0600；也可重新输入设备密钥。",
+      "invalid_origin": "请输入不带路径的 HA 地址。HTTP 需使用内网 IPv4；HTTPS 需有效可信证书。",
+      "invalid_host": "请输入屏幕 IPv4 地址或主机名，不带协议前缀和端口。",
+      "identity_mismatch": "设备身份与所填 MAC 或支持的 AD35 型号不符。请核对设备连接卡和地址。",
+      "unsupported_firmware": "需要屏幕固件 2.1.2 或更新正式版本，才能在 HA 内添加或重新配置。",
+      "already_bound": "屏幕已有绑定。使用同一个 HA 地址重新配置即可选择内容或恢复缺失的条目。",
+      "busy": "屏幕正在处理其他配置或更新，请空闲后重试。",
+      "cannot_connect": "无法建立设备加密连接。请检查屏幕地址、网络和该设备的独立 连接密钥，然后重试。",
+      "invalid_response": "屏幕返回了不兼容的协议响应。",
+      "invalid_request": "配对请求无效或超过长度限制。",
+      "invalid_phase": "本次配置已不在预期阶段，请重新开始。",
+      "device_rejected": "屏幕拒绝了本次配对操作。",
+      "native_api_failed": "加密 Native API 操作失败。",
+      "expired": "授权或配置会话已过期，请在 HA 中重新开始。",
+      "rejected": "已在屏幕上拒绝配对。",
+      "cancelled": "配对已取消。",
+      "authorization_denied": "已拒绝 Home Assistant 授权。",
+      "invalid_authorization": "授权响应无效，请重新开始。",
+      "invalid_selection": "请从本次授权目录选择至多 64 个显示项目，另可选 1 个天气，不可重复。",
+      "save_uncertain": "桌宠可能已保存，但 HA 未确认结果。自动添加请选“恢复已保存的配置”或重新打开发现卡片；HA 保留了恢复凭据，不会重复保存。旧连接方式可用原配对文件恢复，请勿清空绑定。",
+      "commit_in_progress": "屏幕正在保存，此时取消不能撤销保存。",
+      "already_authorized": "授权码已提交过，请勿重复提交。",
+      "already_configured": "这台屏幕已添加。",
+      "already_in_progress": "这台屏幕已有进行中的添加流程。",
+      "not_bound": "屏幕已不再绑定，无法重新配置此条目。请核对设备和现有条目。",
+      "origin_mismatch": "重新配置只允许原来绑定的同一个 HA 地址。请使用原地址；现有绑定未更改。",
+      "binding_changed": "屏幕绑定已在此次配置期间变化，本次更改未保存，请重新开始。",
+      "selection_confirmation_required": "请先核对所选实体，再勾选“确认将所选实体保存到屏幕”并提交。",
+      "reconfigure_successful": "已在屏幕保存新的实体选择，并更新原 HA 条目。",
+      "invalid_noise_psk": "请输入该设备的 连接密钥：32 字节密钥的完整 Base64 编码（44 个字符）。",
+      "invalid_port": "AD35 加密连接端口必须为 6053。",
+      "invalid_pairing_file": "配对文件格式不正确或本次上传已失效，请重新选择随设备提供的原始 .ad35/.json 文件。",
+      "invalid_pin": "请输入屏幕上显示的完整 8 位数字，保留开头的 0。",
+      "bootstrap_invalid_response": "设备返回了不兼容的配对响应，请检查设备及固件版本。",
+      "bootstrap_unsupported_firmware": "临时码需要 2.2.0 或更新的稳定固件。旧固件可使用配对文件或手动填写。",
+      "bootstrap_unavailable": "无法连接临时码服务。检查屏幕地址、网络及 2.2.0 以上固件后重试。",
+      "bootstrap_busy": "屏幕正在处理其他操作，请稍后重新开始。",
+      "bootstrap_already_bound": "屏幕当前未开放临时码。已有条目请使用重新配置；若条目丢失，可导入配对文件恢复。",
+      "bootstrap_locked": "尝试次数已达上限，请等待屏幕允许重新配对后再开始。",
+      "bootstrap_expired": "本次临时码已过期，请重新开始并使用屏幕新显示的临时码。",
+      "bootstrap_connection_lost": "配对连接已断开，请重新开始；旧临时码不能用于恢复连接。",
+      "bootstrap_auth_failed": "临时码未验证通过，请重新开始并核对屏幕上新显示的 8 位码。",
+      "bootstrap_failed": "临时码配对未完成，请检查屏幕后重新开始。",
+      "bootstrap_verified": "配对码验证成功，设备已添加。修改显示设备请使用现有条目的重新配置。",
+      "commissioning_confirmation_required": "请核对这台桌宠，并勾选确认后继续。",
+      "commissioning_unsupported_firmware": "自动添加需要稳定版固件 2.3.0 或以上。旧固件可使用临时码、配对文件或手动输入。",
+      "commissioning_unavailable": "无法通过 HTTPS 连接桌宠，请检查设备地址、网络及 8443 端口后重试。",
+      "commissioning_certificate_error": "桌宠证书不受信任或与此 MAC 不符。请使用匹配的设备固件和集成，不要关闭证书验证。",
+      "commissioning_closed": "桌宠暂时无法自动添加。固件 2.3.1 及以上请确认桌宠未绑定、已连接 Wi-Fi，且没有其它配置或维护操作，再重试；旧固件 2.3.0 仍需在屏上保存 Wi-Fi 后五分钟内添加。已有绑定请用“重新配置”，也可使用备用配对方式。",
+      "commissioning_already_bound": "桌宠已绑定，匿名自动添加已关闭。请使用已有条目、恢复此 HA 已保存的配置，或使用原配对文件。",
+      "invalid_credential": "保存的配置凭据未获设备认可，屏端绑定未改变。请检查原 HA 条目和恢复记录。",
+      "transport_mismatch": "此事务属于另一种连接方式，请取消后使用对应入口重新开始。",
+      "not_ready": "桌宠暂未准备好，请等待网络连接或当前操作完成。",
+      "recovery_storage_error": "无法安全读取或保存私有恢复记录，请检查 HA 存储权限与可用空间。确认恢复记录落盘前，不会向桌宠发起新的保存。",
+      "recovery_not_found": "此 HA 没有这台 MAC 的自动添加恢复记录。请使用已有条目，旧绑定可使用原配对文件。",
+      "recovery_mismatch": "屏端已保存的绑定与恢复记录不符，本次没有修改配置。请检查原 HA 条目。",
+      "reconnect_confirmation_required": "请明确确认重新连接，之后仍需授权和选择显示项目。",
+      "reconnect_required": "桌宠已解绑，请在原 AD35 条目的“需要重新认证”提示中重新连接，或使用原条目的“重新配置”。无需删除设备。",
+      "reconnect_successful": "已重新连接，原 HA 设备条目及历史保留。",
+      "reauth_successful": "已重新连接，原 HA 设备条目及历史保留。",
+      "empty_selection_requires_firmware": "清空全部显示项目和天气需要桌宠固件 2.7.2 或以上。请先升级固件，当前已保存的选择不会改变。"
+    }
+  },
+  "entity": {
+    "update": {
+      "firmware": {
+        "name": "固件"
+      }
+    },
+    "button": {
+      "check_firmware": {
+        "name": "检查固件更新"
+      }
+    }
+  },
+  "exceptions": {
+    "update_requires_firmware": {
+      "message": "HA 固件升级需要设备固件 2.4.0 或以上。请先通过原有维护入口升级一次。"
+    },
+    "update_not_configured": {
+      "message": "桌宠尚未配置固件发布服务。当前版本可查看，暂时不能检查或安装更新。"
+    },
+    "update_not_ready": {
+      "message": "桌宠暂时繁忙或离线，请等待当前操作完成后重试。"
+    },
+    "update_busy": {
+      "message": "桌宠已有操作正在进行，请等待完成后再检查或安装。"
+    },
+    "update_no_candidate": {
+      "message": "没有可安装的更新，请先检查更新。"
+    },
+    "update_candidate_mismatch": {
+      "message": "已检查的版本发生变化或已过期，请重新检查并核对版本后再安装。"
+    },
+    "update_request_mismatch": {
+      "message": "桌宠拒绝了冲突的升级请求，没有重复安装。"
+    },
+    "update_check_failed": {
+      "message": "无法检查固件发布服务，请稍后重新检查。"
+    },
+    "update_manifest_invalid": {
+      "message": "固件发布清单未通过验证，没有安装固件。"
+    },
+    "update_download_auth_failed": {
+      "message": "桌宠无法通过发布服务认证，请联系设备提供者。"
+    },
+    "update_update_failed": {
+      "message": "固件升级失败，请检查桌宠状态后再决定是否重试。"
+    },
+    "update_unknown_operation": {
+      "message": "当前固件不支持 HA 升级指令，请通过原有维护入口升级一次。"
+    },
+    "update_invalid_credential": {
+      "message": "桌宠拒绝了本 HA 的绑定凭据，升级未获授权。"
+    },
+    "update_invalid_payload": {
+      "message": "桌宠拒绝了升级请求格式，请使用互相匹配的集成和固件。"
+    },
+    "update_check_timeout": {
+      "message": "检查未在期限内完成，请求没有重复发送；重试前请先查看桌宠状态。"
+    },
+    "update_result_unknown": {
+      "message": "十分钟内未能确认升级结果，没有重复发送安装。请等待桌宠重新连接，核对当前版本后再决定是否重试。"
+    },
+    "update_invalid_options": {
+      "message": "只能安装当前提供的固件版本，不支持指定其它版本或固件备份。"
+    },
+    "update_unavailable": {
+      "message": "无法建立经过认证的设备连接，请检查网络后重试。"
+    },
+    "identity_mismatch": {
+      "message": "连接到的设备与此 HA 条目不符，升级未获授权。"
+    },
+    "commissioning_certificate_error": {
+      "message": "桌宠证书不受信任或与 MAC 不符，不能跳过证书验证。"
+    },
+    "invalid_response": {
+      "message": "桌宠返回了无效的升级响应，没有重复发送请求。"
+    },
+    "invalid_credential": {
+      "message": "保存的 HA 绑定凭据无效，请检查原有设备绑定。"
+    },
+    "update_interrupted": {
+      "message": "固件操作被其它维护操作中断，请检查桌宠状态后重新检查更新。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "设备选项",
+        "menu_options": {
+          "local_upload": "本地固件升级"
+        }
+      },
+      "local_upload": {
+        "title": "本地固件升级",
+        "description": "选择为这块屏提供的 OTA .bin 文件。上传后先校验并显示详情，确认后才写入设备。不要选择 factory 整包。文件只在本次流程中保留，取消或完成后清理。",
+        "data": {
+          "firmware_file": "OTA 固件文件 (.bin)"
+        }
+      },
+      "local_confirm": {
+        "title": "确认本地升级",
+        "description": "设备：{name}\n当前版本：{current_version}\n目标版本：{target_version}\n文件大小：{size} 字节\nSHA256：{sha256}\n\n允许同版本重装，不允许降级。安装期间保持供电和网络，设备将重启。此操作不修改已选的 HA 实体。",
+        "data": {
+          "confirm_install": "已核对，确认安装此固件并重启设备"
+        }
+      }
+    },
+    "progress": {
+      "local_install": "正在传输和校验固件，随后等待重启并核对运行镜像。请保持设备供电与网络连接。"
+    },
+    "error": {
+      "local_requires_firmware": "本地文件升级需要设备固件 2.5.0 或以上。请先通过现有云升级或维护方式升级一次；云升级入口仍可使用。",
+      "local_invalid_image": "请选择随此设备提供的原始 OTA .bin 文件。不接受 factory 整包、缺少设备标识的旧固件、损坏或超出分区大小的文件。",
+      "local_wrong_device": "此固件属于其他设备或型号，请选择为这块屏提供的 OTA 文件。",
+      "local_downgrade": "不支持降级。请选择当前版本或更高版本的固件。",
+      "local_busy": "另一项升级或设备操作正在进行，请等待完成后重试。",
+      "local_confirm_required": "请核对设备、版本、大小和 SHA256，然后明确勾选确认安装。",
+      "local_expired": "本次上传或传输已过期，请重新选择原始文件。",
+      "local_result_unknown": "尚未确认设备已从新固件启动。系统没有重复发送安装命令，请先检查设备及版本，再决定是否重试。",
+      "local_transfer_failed": "设备未确认本次传输，系统没有自动重复写入。请等待未完成的传输超时后重试。",
+      "local_unavailable": "暂时无法连接设备，或此集成条目尚未加载。请恢复连接后重试。",
+      "identity_mismatch": "认证后的设备身份与此条目不符，已停止操作。",
+      "commissioning_certificate_error": "设备证书验证失败，请核对设备身份和网络连接。",
+      "invalid_response": "设备返回了无效的响应，传输已停止。",
+      "local_interrupted": "传输已中断。未完成的上传会在设备端超时释放；已经开始的校验不会被取消。",
+      "local_invalid_payload": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_invalid_credential": "此条目已无固件升级权限，请先恢复绑定后重试。",
+      "local_unknown_operation": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_not_ready": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_request_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_invalid_session": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_size_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_offset_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_hash_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_begin_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_write_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_verify_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_boot_failed": "设备已重启，但目标分区、版本或镜像摘要不符，未确认升级成功。",
+      "local_incomplete": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_commit_in_progress": "设备正在校验或切换固件，请等待重启，不要断电。",
+      "local_aborted": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_network_changed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_binding_changed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。"
+    },
+    "abort": {
+      "local_requires_firmware": "本地文件升级需要设备固件 2.5.0 或以上。请先通过现有云升级或维护方式升级一次；云升级入口仍可使用。",
+      "local_invalid_image": "请选择随此设备提供的原始 OTA .bin 文件。不接受 factory 整包、缺少设备标识的旧固件、损坏或超出分区大小的文件。",
+      "local_wrong_device": "此固件属于其他设备或型号，请选择为这块屏提供的 OTA 文件。",
+      "local_downgrade": "不支持降级。请选择当前版本或更高版本的固件。",
+      "local_busy": "另一项升级或设备操作正在进行，请等待完成后重试。",
+      "local_confirm_required": "请核对设备、版本、大小和 SHA256，然后明确勾选确认安装。",
+      "local_expired": "本次上传或传输已过期，请重新选择原始文件。",
+      "local_result_unknown": "尚未确认设备已从新固件启动。系统没有重复发送安装命令，请先检查设备及版本，再决定是否重试。",
+      "local_transfer_failed": "设备未确认本次传输，系统没有自动重复写入。请等待未完成的传输超时后重试。",
+      "local_unavailable": "暂时无法连接设备，或此集成条目尚未加载。请恢复连接后重试。",
+      "identity_mismatch": "认证后的设备身份与此条目不符，已停止操作。",
+      "commissioning_certificate_error": "设备证书验证失败，请核对设备身份和网络连接。",
+      "invalid_response": "设备返回了无效的响应，传输已停止。",
+      "local_interrupted": "传输已中断。未完成的上传会在设备端超时释放；已经开始的校验不会被取消。",
+      "local_success": "本地固件升级已验证：设备已从目标分区重新启动，版本与镜像摘要均与上传文件一致。",
+      "local_invalid_payload": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_invalid_credential": "此条目已无固件升级权限，请先恢复绑定后重试。",
+      "local_unknown_operation": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_not_ready": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_request_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_invalid_session": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_size_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_offset_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_hash_mismatch": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_begin_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_write_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_verify_failed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_boot_failed": "设备已重启，但目标分区、版本或镜像摘要不符，未确认升级成功。",
+      "local_incomplete": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_commit_in_progress": "设备正在校验或切换固件，请等待重启，不要断电。",
+      "local_aborted": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_network_changed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。",
+      "local_binding_changed": "设备拒绝或未能完成本次本地升级。请检查设备与网络后重新选择原始固件；系统不会自动重复写入。"
+    }
+  }
+}

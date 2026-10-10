@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/espressif/esp-idf",
+  "version": "v5.5.5",
+  "license": "Apache-2.0",
+  "scope": "Minimal official Security2 SRP-6a/AES-GCM client and protocomm protobuf messages; no tool transport, Wi-Fi provisioning, dynamic imports, or own cryptography implementation.",
+  "runtime_dependencies": "cryptography and protobuf supplied by the existing pinned aioesphomeapi dependency.",
+  "files": [
+    {
+      "path": "security2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/tools/esp_prov/security/security2.py",
+      "upstream_sha256": "bdc90f36a754a9a767aa7298bd697b7ed0ddf42777bda159d13ed646a7c39445",
+      "local_sha256": "3d1d021c2fea3fd48b99b51f4abf899305a18ef9285f7c13126bd0bf6723d590",
+      "modifications": [
+        "Package-relative imports; cryptography and protocol algorithms unchanged."
+      ]
+    },
+    {
+      "path": "security.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/tools/esp_prov/security/security.py",
+      "upstream_sha256": "37a88d266d730154b0b914e51b68e0e50d2565a192cedf76ac57f2743f79c58e",
+      "local_sha256": "37a88d266d730154b0b914e51b68e0e50d2565a192cedf76ac57f2743f79c58e",
+      "modifications": []
+    },
+    {
+      "path": "srp6a.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/tools/esp_prov/security/srp6a.py",
+      "upstream_sha256": "9dc802e1540cce95220479cf1c56a836beeeba0869117fd3904008ac67f5537c",
+      "local_sha256": "1005be67d773a5f2c662df8fe0edcd3f1b73700d53f4ea04a07cd29f3a49f81e",
+      "modifications": [
+        "Package-relative utility imports; SRP algorithm unchanged."
+      ]
+    },
+    {
+      "path": "utils.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/tools/esp_prov/utils/convenience.py",
+      "upstream_sha256": "fadbef74d036079ada0d7ed249ddabc26c8dd10d56aa910cfccf7ed9f7c99d01",
+      "local_sha256": "fadbef74d036079ada0d7ed249ddabc26c8dd10d56aa910cfccf7ed9f7c99d01",
+      "modifications": []
+    },
+    {
+      "path": "LICENSE",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/LICENSE",
+      "upstream_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "local_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "modifications": []
+    },
+    {
+      "path": "proto/constants_pb2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/components/protocomm/python/constants_pb2.py",
+      "upstream_sha256": "24077ad3a8830c9035dc5ca22b9aafd74218bcfbcf5ae0ba4cbfd2446b9199a9",
+      "local_sha256": "28e6ab52ce146fcca3b523315a02d78f1d4a1676189a58225da31d6f9b59bc44",
+      "modifications": [
+        "Package-relative protobuf imports and isolated descriptor pool; official serialized descriptors unchanged."
+      ]
+    },
+    {
+      "path": "proto/sec0_pb2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/components/protocomm/python/sec0_pb2.py",
+      "upstream_sha256": "87232aebc640e012b6c3b5184eaa10296c9679890d985c9ad9067b5f1aa22e39",
+      "local_sha256": "7a708ae2372b42a416db58136e440d6f25eceeed7185d1bb17ab6c533b20901c",
+      "modifications": [
+        "Package-relative protobuf imports and isolated descriptor pool; official serialized descriptors unchanged."
+      ]
+    },
+    {
+      "path": "proto/sec1_pb2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/components/protocomm/python/sec1_pb2.py",
+      "upstream_sha256": "93be151ecf6890b4464aaca77ca892693997c49d2308258a61d202a44fc2fda8",
+      "local_sha256": "dec2614d22984e2d34f9d604492d5e76db8dfdc818286dce0fe3ecaeda931bad",
+      "modifications": [
+        "Package-relative protobuf imports and isolated descriptor pool; official serialized descriptors unchanged."
+      ]
+    },
+    {
+      "path": "proto/sec2_pb2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/components/protocomm/python/sec2_pb2.py",
+      "upstream_sha256": "51bdbbefabc8a948f7307f9b682e32fbfcaaa1b8bee34e16cb2fc1d937230379",
+      "local_sha256": "3a3cdfd03a3642d1d2de56eea77045924712e45a0628366cd749283a28e73d5a",
+      "modifications": [
+        "Package-relative protobuf imports and isolated descriptor pool; official serialized descriptors unchanged."
+      ]
+    },
+    {
+      "path": "proto/session_pb2.py",
+      "source_url": "https://raw.githubusercontent.com/espressif/esp-idf/v5.5.5/components/protocomm/python/session_pb2.py",
+      "upstream_sha256": "8130c80be0db49c86d6897f9f48ab2cb7fb676d4886d15e549bb908324aa767d",
+      "local_sha256": "db66422d0033d26d93a41e9b354e9a413ddc0a45a9bc82b6fb99fa49c1a109ea",
+      "modifications": [
+        "Package-relative protobuf imports and isolated descriptor pool; official serialized descriptors unchanged."
+      ]
+    }
+  ]
+}
